@@ -1,14 +1,14 @@
 
 # Face Detection Server with Torchserve and TensorRT (torch2trt)
 
-Inference yolov5_face model with Torchserve and TensorRT backend（recommended）. 11ms latency，query per second (QPS) 700 on T4 GPU server
+Inference yolov5_face model with Torchserve and TensorRT backend（recommended）with 11ms latency，query per second (QPS) 700 on T4 GPU server
 
-use Torchserve with Jit TorchScript backend see **torchserve/readme_torchserve_depricated.md**. With higher latency and lower throughput. 
+Traditional Torchserve pipeline with Jit TorchScript backend see **torchserve/readme_torchserve_depricated.md**. With higher latency and lower throughput. 
 
 this repo is adapted from https://github.com/deepcam-cn/yolov5-face (Warning: GNU LICENSE)
 1. Add Torchserve as Inference server
-2. accerlerated with TensorRT by torch2trt toolkit, with 10x lower latency and 2x larger throughput. This is the first demo to show how serve TensorRT model on Torchserve as far as I know. 
-3. add Docker and logging. 
+2. Accerlerated with TensorRT by torch2trt toolkit, with 10x lower latency and 2x larger throughput. This is the first demo to show how serve TensorRT model on Torchserve as far as I know. 
+3. Add Docker and logging. 
 
 Where Torchserve is a performant, flexible and easy to use tool for serving PyTorch eager mode and torschripted models https://github.com/pytorch/serve. 
 
@@ -16,7 +16,7 @@ TensorRT is a library developed by NVIDIA for faster inference on NVIDIA graphic
 
 "torch2trt" is a PyTorch to TensorRT converter which utilizes the TensorRT Python API. It remain the input/ouput of the model as Torch Tensor format. https://github.com/NVIDIA-AI-IOT/torch2trt
 
-## Use TensorRT with Torchserve
+## Use TensorRT with Torchserve together in few lines of code
 
 torchserve can serve torch2trt model pretty well, simply by rewriting the handler like this.
 ```
@@ -58,10 +58,10 @@ input：jpg data stream，
 output：json format, (bounding box, confidence, 5 landmarks)
 ```json
 [
-	{
-		"xywh_ratio": [0.7689772367477417, 0.25734335581461587, 0.11677041053771975, 0.26296865675184466], 
-	    "conf": 0.8641895651817322, 
-    	"landmarks_ratio": [0.754405927658081, 0.22680193583170574, 0.8030961990356446, 0.23478228251139324, 0.7799828529357911, 0.2754765404595269, 0.7510656356811524, 0.31618389553493925, 0.7911150932312012, 0.32295591566297743]
+    {
+        "xywh_ratio": [0.7689772367477417, 0.25734335581461587, 0.11677041053771975, 0.26296865675184466], 
+        "conf": 0.8641895651817322, 
+        "landmarks_ratio": [0.754405927658081, 0.22680193583170574, 0.8030961990356446, 0.23478228251139324, 0.7799828529357911, 0.2754765404595269, 0.7510656356811524, 0.31618389553493925, 0.7911150932312012, 0.32295591566297743]
     }, 
     {
     	"xywh_ratio": [0.4645264148712158, 0.47456512451171873, 0.12120456695556636, 0.29619462754991316], 
