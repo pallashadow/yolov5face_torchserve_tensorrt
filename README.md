@@ -12,6 +12,27 @@ this repo is adapted from https://github.com/deepcam-cn/yolov5-face (Warning: GN
 
 Where Torchserve is a performant, flexible and easy to use tool for serving PyTorch eager mode and torschripted models. TensorRT is a library developed by NVIDIA for faster inference on NVIDIA graphics processing units (GPUs). ... It can give around 4 to 5 times faster inference on many real-time services and embedded applications. "torch2trt" is a PyTorch to TensorRT converter which utilizes the TensorRT Python API. It remain the input/ouput of the model as Torch Tensor format. https://github.com/NVIDIA-AI-IOT/torch2trt
 
+## Use TensorRT with Torchserve
+
+torchserve can serve torch2trt model pretty well, simply by rewriting the handler like this.
+```
+from torch2trt import TRTModule
+
+class Yolov5FaceHandler(BaseHandler):
+    def initialize(self, context):
+        serialized_file = context.manifest["model"]["serializedFile"]
+        if serialized_file.split(".")[-1] == "torch2trt": #if serializedFile ends with .torch2trt instead of .pt
+            self._load_torchscript_model = self._load_torch2trt_model # overwrite load model function
+        self.super().initializer(context)
+
+    def _load_torch2trt_model(self, torch2trt_path):
+        logger.info("Loading torch2trt model")
+        model_trt = TRTModule()
+        model_trt.load_state_dict(torch.load(torch2trt_path))
+        return model_trt
+```
+
+see https://github.com/pytorch/serve/issues/1243 for discussion
 
 ## why choose yolov5face as face detection model
 1. currently (20210904) a SOTA face-detection model on widerface benchmark, balanced between speed and accuracy. 
