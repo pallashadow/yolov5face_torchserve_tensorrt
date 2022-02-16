@@ -1,0 +1,20 @@
+FROM nvcr.io/nvidia/tensorrt:20.12-py3
+# include ubuntu20.04, cuda, cudnn, tensorRT, pytorch
+
+COPY requirements.txt requirements.txt
+
+# setup torch2trt
+RUN python3 -m pip install pip --upgrade
+RUN python3 -m pip install -r requirements.txt  -i https://mirrors.aliyun.com/pypi/simple
+
+# setup java-11
+RUN wget download.op.uzoo.cn/openjdk-11+28_linux-x64_bin.tar.gz
+RUN tar xvf openjdk-11+28_linux-x64_bin.tar.gz  -C /usr/local/
+RUN ln -s /usr/local/jdk-11 /usr/java11
+RUN ln -s /usr/java11/bin/java /usr/local/bin/java
+
+RUN echo export JAVA_HOME=/usr/java11 >> /etc/profile
+RUN echo export JRE_HOME=$JAVA_HOME/jre >> /etc/profile
+RUN echo export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib >> /etc/profile
+RUN echo export PATH=${JAVA_HOME}/bin:$PATH >> /etc/profile
+RUN rm openjdk-11+28_linux-x64_bin.tar.gz
