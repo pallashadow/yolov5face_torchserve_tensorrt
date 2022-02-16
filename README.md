@@ -96,7 +96,7 @@ Each yolov5face torchserve consumes 2.5G memory in average, so memory of the sys
 
 ### install dependencies
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 install java11 dependence.    https://www.ubuntu18.com/ubuntu-install-openjdk-11/  
 On cloud server, if cuda version is different from cuda10.2, manually edit the pytorch version in requirements.txt
