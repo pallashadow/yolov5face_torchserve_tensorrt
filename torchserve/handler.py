@@ -298,50 +298,8 @@ class Yolov5FaceHandler(BaseHandler):
             output = self.postprocess(output, padsizeList)
         else:
             output = self.explain_handle(data_preprocess, data)
-    
-        
 
         stop_time = time.time()
         metrics.add_time('HandlerTime', round((stop_time - start_time) * 1000, 2), None, 'ms')
         return output
     
-    
-'''
-import io
-from PIL import Image
-from torchvision import transforms
-
-def preprocess_client1(b_img, img_size=320, stride_max=32): 
-    """
-    使用PIL和transforms.Compose，但初始化速度太慢，废弃
-    """
-    orgimg = Image.open(io.BytesIO(b_img))
-    w0, h0 = orgimg.size
-
-    if max(h0, w0)>img_size:
-        if h0>w0:
-            s = img_size / h0
-            h1, w1 = img_size, int(w0*s//2*2)
-        else:
-            s = img_size / w0
-            h1, w1 = int(h0*s//2*2), img_size
-    else:
-        h1, w1 = h0, w0
-
-    image_processing = transforms.Compose([
-        transforms.Resize((h1,w1)),
-        transforms.ToTensor(),
-    ]) # slow to init
-    imgT = image_processing(orgimg)
-
-    padw = (img_size - w1)//2
-    padh = (img_size - h1)//2
-    pad = torch.ones([3, h1, padw])*0.5
-    imgT = torch.cat([pad, imgT, pad], dim=2)
-    pad = torch.ones([3, padh, img_size])*0.5
-    imgT = torch.cat([pad, imgT, pad], dim=1)
-    assert(imgT.shape[1]==img_size and imgT.shape[2]==img_size)
-    padsize = np.array([padw, padh])
-    return imgT, padsize
-
-'''
