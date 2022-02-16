@@ -10,7 +10,11 @@ this repo is adapted from https://github.com/deepcam-cn/yolov5-face (Warning: GN
 2. accerlerated with TensorRT by torch2trt toolkit, with 10x lower latency and 2x larger throughput. This is the first demo to show how serve TensorRT model on Torchserve as far as I know. 
 3. add Docker and logging. 
 
-Where Torchserve is a performant, flexible and easy to use tool for serving PyTorch eager mode and torschripted models. TensorRT is a library developed by NVIDIA for faster inference on NVIDIA graphics processing units (GPUs). ... It can give around 4 to 5 times faster inference on many real-time services and embedded applications. "torch2trt" is a PyTorch to TensorRT converter which utilizes the TensorRT Python API. It remain the input/ouput of the model as Torch Tensor format. https://github.com/NVIDIA-AI-IOT/torch2trt
+Where Torchserve is a performant, flexible and easy to use tool for serving PyTorch eager mode and torschripted models https://github.com/pytorch/serve. 
+
+TensorRT is a library developed by NVIDIA for faster inference on NVIDIA graphics processing units (GPUs). ... It can give around 4 to 5 times faster inference on many real-time services and embedded applications. https://github.com/NVIDIA/TensorRT
+
+"torch2trt" is a PyTorch to TensorRT converter which utilizes the TensorRT Python API. It remain the input/ouput of the model as Torch Tensor format. https://github.com/NVIDIA-AI-IOT/torch2trt
 
 ## Use TensorRT with Torchserve
 
