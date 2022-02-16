@@ -1,0 +1,14 @@
+thop
+torch
+torchvision
+torchserve
+torch-model-archiver
+requests
+opencv-python-headless
+tqdm
+pyyaml
+matplotlib
+pandas
+seaborn
+google-api-python-client
+grpcio

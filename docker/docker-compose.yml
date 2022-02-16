@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  facedetect:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: yolov5face:${TAG}
+    runtime: nvidia
+    container_name: facedetect_${TAG}
+    hostname: facedetect_${TAG}
+    privileged: true
+    restart: always
+    network_mode: "host"
+    volumes:
+      - type: bind
+        source: ..
+        target: /app

@@ -1,0 +1,11 @@
+logs/
+*.pt
+#*.pth
+*.onnx
+*.trt
+*.torch2trt
+torch2trt/
+result.jpg
+__pycache__/
+torchserve/model_store/
+*.pyc
