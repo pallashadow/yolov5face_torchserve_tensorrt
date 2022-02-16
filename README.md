@@ -1,16 +1,16 @@
 
-# Use Torchserve and TensorRT (torch2trt) and yolov5face to build a face detection server
+# Face Detection Server with Torchserve and TensorRT (torch2trt)
 
-use Torchserve with TensorRT backend（recommended） with 11ms latency，query per second (QPS) 700 on T4 GPU server
+Inference yolov5_face model with Torchserve and TensorRT backend（recommended）. 11ms latency，query per second (QPS) 700 on T4 GPU server
 
 use Torchserve with Jit TorchScript backend see **torchserve/readme_torchserve_depricated.md**. With higher latency and lower throughput. 
 
 this repo is adapted from https://github.com/deepcam-cn/yolov5-face (Warning: GNU LICENSE)
 1. Add Torchserve as Inference server
-2. accerlerated with TensorRT by torch2trt toolkit, with 10x lower latency and 2x larger throughput. this is the first demo to show how serve TensorRT model on Torchserve as far as I know. 
+2. accerlerated with TensorRT by torch2trt toolkit, with 10x lower latency and 2x larger throughput. This is the first demo to show how serve TensorRT model on Torchserve as far as I know. 
 3. add Docker and logging. 
 
-Where Torchserve is a performant, flexible and easy to use tool for serving PyTorch eager mode and torschripted models. TensorRT is a library developed by NVIDIA for faster inference on NVIDIA graphics processing units (GPUs). ... It can give around 4 to 5 times faster inference on many real-time services and embedded applications. torch2trt is a PyTorch to TensorRT converter which utilizes the TensorRT Python API. It remain the input/ouput of the model as Torch Tensor format. https://github.com/NVIDIA-AI-IOT/torch2trt
+Where Torchserve is a performant, flexible and easy to use tool for serving PyTorch eager mode and torschripted models. TensorRT is a library developed by NVIDIA for faster inference on NVIDIA graphics processing units (GPUs). ... It can give around 4 to 5 times faster inference on many real-time services and embedded applications. "torch2trt" is a PyTorch to TensorRT converter which utilizes the TensorRT Python API. It remain the input/ouput of the model as Torch Tensor format. https://github.com/NVIDIA-AI-IOT/torch2trt
 
 
 ## why choose yolov5face as face detection model
@@ -29,7 +29,7 @@ python torchserve/qpstest.py --mode 1 --vis 1 --image data/images/test.jpg
 
 ## Interface protocal
 
-input：jpg binary data，
+input：jpg data stream，
 output：json format, (bounding box, confidence, 5 landmarks)
 ```json
 [
